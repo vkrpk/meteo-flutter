@@ -15,7 +15,6 @@ void main() async {
   // WidgetsFlutterBinding.ensureInitialized();
   // await dotenv.load(fileName: ".env");
   //
-  // // Initialize the database manager
   // DatabaseManager databaseManager = DatabaseManager();
   // Database database = await databaseManager.database;
   // WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +24,7 @@ void main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await dotenv.load(fileName: ".env");
   runApp(MyApp());
+  FlutterNativeSplash.remove();
 }
 
 class MyApp extends StatelessWidget {
@@ -54,12 +54,6 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
   double _latitude = 51.509364;
   double _longitude = -0.128928;
   List<String> selectedCities = [];
-
-  @override
-  void initState() {
-    super.initState();
-    FlutterNativeSplash.remove();
-  }
 
   Future<void> fetchWeather(String cityName) async {
     setState(() {

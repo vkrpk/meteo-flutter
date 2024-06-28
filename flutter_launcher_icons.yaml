@@ -5,16 +5,16 @@ flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   image_path: "images/appIcon.png"
-  min_sdk_android: 21 # android min sdk min:16, default 21
+  min_sdk_android: 21
   web:
     generate: true
     image_path: "images/appIcon.png"
-    background_color: "#42a5f5" # Exemple de couleur de fond pour le web
-    theme_color: "#42a5f5"      # Exemple de couleur de thème pour le web
+    background_color: "#42a5f5"
+    theme_color: "#42a5f5"
   windows:
     generate: true
     image_path: "images/appIcon.png"
-    icon_size: 48 # min:48, max:256, default: 48
+    icon_size: 48
   macos:
     generate: true
     image_path: "images/appIcon.png"

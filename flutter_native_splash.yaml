@@ -1,41 +1,11 @@
 flutter_native_splash:
-  # Couleur de fond du splash screen
   color: "#42a5f5"
-
-  # Image du splash screen (utilisée pour les versions d'Android < 12, iOS et le web)
   image: images/appIcon.png
+  android: true
+  ios: true
+  web: true
 
-  # Paramètres pour Android 12+
   android_12:
-    # Image pour le splash screen sur Android 12+
     image: images/appIcon.png
-
-    # Couleur de fond du splash screen sur Android 12+
     color: "#42a5f5"
-
-    # Couleur de fond de l'icône sur Android 12+ (facultatif)
-    # icon_background_color: "#111111"
-
-    # Image de branding (facultatif)
     branding: images/appIcon.png
-
-  # Désactiver la génération du splash screen pour les plateformes non supportées (facultatif)
-  # android: true
-  # ios: true
-  # web: true
-
-  # Positionnement de l'image du splash screen
-  # android_gravity: center
-  # ios_content_mode: center
-  # web_image_mode: center
-
-  # Orientation de l'écran (facultatif)
-  # android_screen_orientation: sensorLandscape
-
-  # Mode plein écran pour cacher la barre de notification (facultatif)
-  # fullscreen: true
-
-  # Fichiers Info.plist pour iOS (facultatif)
-  # info_plist_files:
-  #  - 'ios/Runner/Info-Debug.plist'
-  #  - 'ios/Runner/Info-Release.plist'
