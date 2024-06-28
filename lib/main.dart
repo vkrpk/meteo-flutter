@@ -107,6 +107,25 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
               },
               child: const Text('Add City'),
             ),
+            const SizedBox(height: 10),
+            Expanded(
+              child: ListView.builder(
+                itemCount: selectedCities.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(selectedCities[index]),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.delete),
+                      onPressed: () {
+                        setState(() {
+                          selectedCities.removeAt(index);
+                        });
+                      },
+                    ),
+                  );
+                },
+              ),
+            ),
             if (isError)
               const Text(
                 'Failed to load weather data. Please try again.',
