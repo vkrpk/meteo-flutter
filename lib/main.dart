@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:meteo/services/city_service.dart';
-import 'package:meteo/services/database_manager.dart';
 import 'package:meteo/services/meteo_service.dart';
 import 'models/meteodata.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -10,16 +9,9 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await dotenv.load(fileName: ".env");
-  //
-  // DatabaseManager databaseManager = DatabaseManager();
-  // Database database = await databaseManager.database;
-  // WidgetsFlutterBinding.ensureInitialized();
-  // final db = await DatabaseManager.openMyDatabase();
-  // print(db);
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await dotenv.load(fileName: ".env");
@@ -54,6 +46,24 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
   double _latitude = 51.509364;
   double _longitude = -0.128928;
   List<String> selectedCities = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSelectedCities();
+  }
+
+  Future<void> _loadSelectedCities() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      selectedCities = prefs.getStringList('selectedCities') ?? [];
+    });
+  }
+
+  Future<void> _saveSelectedCities() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList('selectedCities', selectedCities);
+  }
 
   Future<void> fetchWeather(String cityName) async {
     setState(() {
@@ -104,14 +114,15 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
               ),
             ),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 final enteredCity = _cityController.text.trim();
                 if (enteredCity.isNotEmpty) {
+                  await fetchWeather(enteredCity);
                   setState(() {
-                    fetchWeather(enteredCity);
                     selectedCities.add(enteredCity);
+                    _saveSelectedCities();
                   });
-                  _cityController.clear(); // Clear text field after adding city
+                  _cityController.clear();
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
@@ -134,6 +145,7 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
                       onPressed: () {
                         setState(() {
                           selectedCities.removeAt(index);
+                          _saveSelectedCities();
                         });
                       },
                     ),
