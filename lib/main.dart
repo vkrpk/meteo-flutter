@@ -10,13 +10,13 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:geolocator/geolocator.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await dotenv.load(fileName: ".env");
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   runApp(MyApp());
-  FlutterNativeSplash.remove();
 }
 
 class MyApp extends StatelessWidget {
@@ -51,6 +51,7 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
   void initState() {
     super.initState();
     _loadSelectedCities();
+    FlutterNativeSplash.remove();
   }
 
   Future<void> _loadSelectedCities() async {
