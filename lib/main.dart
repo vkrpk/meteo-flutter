@@ -12,6 +12,8 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:geolocator/geolocator.dart';
 
+// Please run : flutter run --release --dart-define=FLUTTER_WEB_USE_SKIA=true -d chrome -v
+// To launch the application
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
