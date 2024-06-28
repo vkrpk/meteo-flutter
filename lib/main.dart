@@ -1,13 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:meteo/services/city_service.dart';
+import 'package:meteo/services/database_manager.dart';
 import 'package:meteo/services/meteo_service.dart';
 import 'models/meteodata.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() async {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await dotenv.load(fileName: ".env");
+  //
+  // // Initialize the database manager
+  // DatabaseManager databaseManager = DatabaseManager();
+  // Database database = await databaseManager.database;
+  // WidgetsFlutterBinding.ensureInitialized();
+  // final db = await DatabaseManager.openMyDatabase();
+  // print(db);
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await dotenv.load(fileName: ".env");
   runApp(MyApp());
 }
@@ -39,6 +54,12 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
   double _latitude = 51.509364;
   double _longitude = -0.128928;
   List<String> selectedCities = [];
+
+  @override
+  void initState() {
+    super.initState();
+    FlutterNativeSplash.remove();
+  }
 
   Future<void> fetchWeather(String cityName) async {
     setState(() {
@@ -159,3 +180,5 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
     );
   }
 }
+
+
