@@ -38,6 +38,7 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
   bool isError = false;
   double _latitude = 51.509364;
   double _longitude = -0.128928;
+  List<String> selectedCities = [];
 
   Future<void> fetchWeather(String cityName) async {
     setState(() {
@@ -91,7 +92,11 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
               onPressed: () {
                 final enteredCity = _cityController.text.trim();
                 if (enteredCity.isNotEmpty) {
-                  fetchWeather(enteredCity);
+                  setState(() {
+                    fetchWeather(enteredCity);
+                    selectedCities.add(enteredCity);
+                  });
+                  _cityController.clear(); // Clear text field after adding city
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
@@ -100,7 +105,7 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
                   );
                 }
               },
-              child: const Text('Get Weather'),
+              child: const Text('Add City'),
             ),
             if (isError)
               const Text(
@@ -129,7 +134,6 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
                 ],
               ),
             ),
-
           ],
         ),
       ),
